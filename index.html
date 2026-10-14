@@ -137,31 +137,50 @@
     }
   }, 1000);
 
-  let noClicks = 0;
-  let yesScale = 1;
+ 
+let noClicks = 0;
+let yesScale = 1;
 
-  no.addEventListener("click", () => {
-    noClicks++;
-    yesScale = Math.min(yesScale * 1.35, 3.2);
-    yes.style.transform = `scale(${yesScale})`;
-    hint.textContent = noClicks < 3
-      ? "Haha, the Yes button seems to be getting confident."
-      : "The Yes button is getting ambitious 😂 You can still say no or close this page.";
-  });
+no.addEventListener("click", () => {
+  noClicks++;
 
-  yes.addEventListener("click", async () => {
-    proposal.style.display = "none";
-    celebration.style.display = "block";
-    for (let i = 0; i < 24; i++) {
-      setTimeout(() => {
-        const heart = document.createElement("span");
-        heart.className = "heart";
-        heart.textContent = ["💜", "💗", "💕", "❤️"][i % 4];
-        heart.style.left = Math.random() * 100 + "vw";
-        document.body.appendChild(heart);
-        setTimeout(() => heart.remove(), 4200);
-      }, i * 120);
-    }
+  // Hide the other content as YES grows.
+  yes.style.position = "fixed";
+  yes.style.left = "50%";
+  yes.style.top = "50%";
+  yes.style.transform = "translate(-50%, -50%)";
+  yes.style.transformOrigin = "center";
+  yes.style.zIndex = "99999";
+  yes.style.transition = "all 0.35s ease";
+
+  // Grow faster with every click.
+  yesScale *= 1.8;
+  yes.style.width = "100vw";
+  yes.style.height = "100vh";
+  yes.style.maxWidth = "none";
+  yes.style.borderRadius = "0";
+  yes.style.fontSize = Math.min(24 + noClicks * 8, 100) + "px";
+
+  // Cover the whole screen after enough clicks.
+  yes.style.transform =
+    `translate(-50%, -50%) scale(${yesScale})`;
+
+  yes.textContent = noClicks >= 4
+    ? "YES 💜"
+    : "YES 💜 (" + noClicks + ")";
+
+  // Hide all proposal content except the YES button.
+  if (noClicks >= 4) {
+    [...proposal.children].forEach(child => {
+      if (child !== buttons) child.style.visibility = "hidden";
+    });
+    no.style.visibility = "hidden";
+    yes.textContent = "YES 💜";
+  }
+
+  hint.textContent = "";
+});
+
 
     // Optional notification: configure this in the next section.
     await notifyMe();
