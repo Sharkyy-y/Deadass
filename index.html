@@ -2,347 +2,562 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>One Quick Question 💜</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f8f0ff">
+  <title>One Quick Question 💜</title>
 
-<style>
-* { box-sizing: border-box; }
+  <style>
+    * {
+      box-sizing: border-box;
+    }
 
-body {
-  margin: 0;
-  min-height: 100vh;
-  display: grid;
-  place-items: center;
-  font-family: Arial, sans-serif;
-  color: #30243e;
-  background: linear-gradient(135deg, #f8f0ff, #ffe2ed);
-  overflow-x: hidden;
-}
+    :root {
+      --purple: #704ddd;
+      --dark: #30243e;
+      --pink: #ffe2ed;
+    }
 
-.card {
-  width: min(92%, 520px);
-  padding: 25px 20px;
-  background: #ffffffed;
-  border-radius: 24px;
-  text-align: center;
-  box-shadow: 0 12px 45px #5d42651c;
-  position: relative;
-  z-index: 1;
-}
+    body {
+      margin: 0;
+      min-height: 100vh;
+      min-height: 100dvh;
+      display: grid;
+      place-items: center;
+      padding: 18px;
+      font-family: Arial, sans-serif;
+      color: var(--dark);
+      background: linear-gradient(135deg, #f8f0ff, var(--pink));
+      overflow-x: hidden;
+    }
 
-h1 { font-size: 27px; }
-p { line-height: 1.6; }
+    button {
+      border: none;
+      border-radius: 14px;
+      padding: 14px 20px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
+    }
 
-button {
-  border: 0;
-  border-radius: 12px;
-  padding: 14px 20px;
-  font-size: 16px;
-  cursor: pointer;
-}
+    button:focus-visible {
+      outline: 3px solid #a18ae9;
+      outline-offset: 4px;
+    }
 
-.primary, #yes {
-  background: #704ddd;
-  color: white;
-}
+    .card {
+      width: min(100%, 520px);
+      padding: 25px 20px;
+      background: #ffffffed;
+      border: 1px solid #ffffff;
+      border-radius: 26px;
+      text-align: center;
+      box-shadow: 0 15px 50px #5d42651c;
+      position: relative;
+      z-index: 1;
+    }
 
-.secondary, #no {
-  background: #eeeaf5;
-  color: #30243e;
-}
+    h1 {
+      font-size: clamp(24px, 6vw, 32px);
+      line-height: 1.25;
+    }
 
-#arena {
-  height: 210px;
-  margin: 18px 0;
-  border: 1px dashed #c8bce7;
-  border-radius: 16px;
-  position: relative;
-  overflow: hidden;
-  background: #faf8ff;
-}
+    h2 {
+      font-size: clamp(20px, 5vw, 26px);
+      line-height: 1.4;
+    }
 
-#target {
-  position: absolute;
-  left: 35%;
-  top: 40%;
-  padding: 12px 18px;
-}
+    p {
+      line-height: 1.65;
+    }
 
-#proposal, #celebration { display: none; }
+    .primary,
+    #yes {
+      background: var(--purple);
+      color: white;
+    }
 
-#buttons {
-  min-height: 130px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 12px;
-  position: relative;
-}
+    .secondary,
+    #no {
+      background: #eeeaf5;
+      color: var(--dark);
+    }
 
-#yes {
-  position: relative;
-  z-index: 2;
-  transition: all .35s ease;
-}
+    #arena {
+      height: 210px;
+      margin: 18px 0;
+      border: 1px dashed #c8bce7;
+      border-radius: 16px;
+      position: relative;
+      overflow: hidden;
+      background: #faf8ff;
+    }
 
-#no { position: relative; z-index: 3; }
+    #target {
+      position: absolute;
+      left: 35%;
+      top: 40%;
+      padding: 12px 18px;
+      font-size: 23px;
+    }
 
-.note { font-size: 12px; color: #777087; }
+    #proposal,
+    #celebration {
+      display: none;
+    }
 
-.cartoons { font-size: 62px; margin: 16px 0; }
+    #buttons {
+      min-height: 130px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      position: relative;
+    }
 
-.dancer {
-  font-size: 100px;
-  display: inline-block;
-  animation: dance .55s infinite alternate ease-in-out;
-}
+    #yes {
+      position: relative;
+      z-index: 2;
+      transition:
+        transform 0.3s ease,
+        background 0.3s ease;
+    }
 
-@keyframes dance {
-  from { transform: rotate(-18deg) translateY(0); }
-  to { transform: rotate(18deg) translateY(-18px); }
-}
+    #no {
+      position: relative;
+      z-index: 3;
+    }
 
-.heart {
-  position: fixed;
-  bottom: -45px;
-  font-size: 28px;
-  pointer-events: none;
-  z-index: 10;
-  animation: floatUp 4s linear forwards;
-}
+    .note {
+      font-size: 12px;
+      color: #777087;
+    }
 
-@keyframes floatUp {
-  to {
-    transform: translateY(-110vh) rotate(25deg);
-    opacity: 0;
-  }
-}
+    .cartoons {
+      font-size: clamp(42px, 12vw, 65px);
+      margin: 16px 0;
+    }
 
-#musicButton { margin: 8px; }
+    .dancer {
+      font-size: 90px;
+      display: inline-block;
+      animation: dance 0.55s infinite alternate ease-in-out;
+    }
 
-@media (prefers-reduced-motion: reduce) {
-  .dancer, .heart { animation-duration: 2s; }
-}
-</style>
+    @keyframes dance {
+      from {
+        transform: rotate(-18deg) translateY(0);
+      }
+      to {
+        transform: rotate(18deg) translateY(-15px);
+      }
+    }
+
+    .heart {
+      position: fixed;
+      bottom: -45px;
+      font-size: 28px;
+      pointer-events: none;
+      z-index: 100001;
+      animation: floatUp 4s linear forwards;
+    }
+
+    @keyframes floatUp {
+      to {
+        transform: translateY(-115vh) rotate(30deg);
+        opacity: 0;
+      }
+    }
+
+    #musicButton,
+    #closeButton {
+      margin: 7px;
+    }
+
+    #celebration {
+      animation: appear 0.6s ease both;
+    }
+
+    @keyframes appear {
+      from {
+        opacity: 0;
+        transform: scale(0.92);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    #yes.fullscreen {
+      position: fixed;
+      inset: 0;
+      width: 100vw;
+      width: 100dvw;
+      height: 100vh;
+      height: 100dvh;
+      max-width: none;
+      margin: 0;
+      padding: 20px;
+      border-radius: 0;
+      font-size: clamp(35px, 10vw, 80px);
+      transform: none !important;
+      z-index: 99999;
+      display: grid;
+      place-items: center;
+    }
+
+    @media (max-width: 380px) {
+      .card {
+        padding: 20px 14px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+      }
+    }
+  </style>
 </head>
 
 <body>
-<main class="card">
+  <main class="card">
 
-  <!-- MINI GAME -->
-  <section id="game">
-    <h1>One Quick Challenge</h1>
-    <p>Catch the star before the timer ends.</p>
-    <p>Time left: <strong id="time">10</strong> seconds</p>
+    <!-- MINI GAME -->
+    <section id="game">
+      <h1>One Quick Challenge ⭐</h1>
+      <p>Catch the star before the timer ends!</p>
+      <p>Time left: <strong id="time">10</strong> seconds</p>
 
-    <div id="arena">
-      <button id="target" class="primary">★</button>
-    </div>
+      <div id="arena">
+        <button id="target" class="primary"
+          aria-label="Catch the star">★</button>
+      </div>
 
-    <p id="score">Stars caught: 0</p>
-    <p class="note">A tiny challenge. Nothing serious.</p>
-  </section>
+      <p id="score">Stars caught: 0</p>
+      <p class="note">A tiny challenge before a little question. 💜</p>
+    </section>
 
-  <!-- PROPOSAL -->
-  <section id="proposal">
-    <h1>Okay, one real question.</h1>
-    <p>I've enjoyed getting to know you, and I'd like to make this a little more official.</p>
-    <h2>Would you like to be my girlfriend? 💜</h2>
+    <!-- PROPOSAL -->
+    <section id="proposal">
+      <h1>Okay, one real question. 💌</h1>
 
-    <div id="buttons">
-      <button id="yes">YES 💜</button>
-      <button id="no">No, thank you</button>
-    </div>
+      <p>
+        I've enjoyed getting to know you, and I'd love
+        to see where this beautiful connection goes.
+      </p>
 
-    <p id="hint" class="note"></p>
-  </section>
+      <h2>Would you like to be my girlfriend? 💜</h2>
 
-  <!-- CELEBRATION -->
-  <section id="celebration">
-    <h1>Well, this just made my day! 💜</h1>
+      <div id="buttons">
+        <button id="yes">YES 💜</button>
+        <button id="no">No, thank you 🙈</button>
+      </div>
 
-    <div class="dancer">💃</div>
-    <div class="cartoons">🧑🏻‍🤝‍🧑🏽</div>
+      <p id="hint" class="note" aria-live="polite"></p>
+    </section>
 
-    <p>Looks like the beginning of something good.</p>
-    <p>I'm glad you said yes. 💕</p>
+    <!-- CELEBRATION -->
+    <section id="celebration">
+      <h1>Well, this just made my day! 💜</h1>
 
-    <div class="cartoons">💗 💕 ❤️ 💖</div>
+      <div class="dancer">💃</div>
+      <div class="cartoons">🧑🏻‍🤝‍🧑🏽</div>
 
-    <audio id="loveMusic" src="love-music.mp3" loop preload="auto"></audio>
+      <p>Looks like the beginning of something beautiful.</p>
+      <p>I'm so glad you said yes! 💕</p>
 
-    <button id="musicButton" class="secondary">Play music 🎵</button>
-    <br>
-    <button id="closeButton" class="secondary">Close celebration</button>
-  </section>
+      <div class="cartoons">💗 💕 ❤️ 💖</div>
 
-</main>
+      <audio
+        id="loveMusic"
+        src="love-music.mp3"
+        loop
+        preload="auto">
+      </audio>
 
-<script>
-const game = document.getElementById("game");
-const proposal = document.getElementById("proposal");
-const celebration = document.getElementById("celebration");
-const target = document.getElementById("target");
-const arena = document.getElementById("arena");
-const timeLabel = document.getElementById("time");
-const scoreLabel = document.getElementById("score");
-const yes = document.getElementById("yes");
-const no = document.getElementById("no");
-const buttons = document.getElementById("buttons");
-const hint = document.getElementById("hint");
-const music = document.getElementById("loveMusic");
+      <button id="musicButton" class="secondary">
+        Play music 🎵
+      </button>
 
-let seconds = 10;
-let score = 0;
-let noClicks = 0;
-let finished = false;
-let yesScale = 1;
+      <br>
 
-function moveTarget() {
-  const maxX = Math.max(0, arena.clientWidth - target.offsetWidth);
-  const maxY = Math.max(0, arena.clientHeight - target.offsetHeight);
+      <button id="closeButton" class="secondary">
+        Play again ↻
+      </button>
+    </section>
 
-  target.style.left = Math.random() * maxX + "px";
-  target.style.top = Math.random() * maxY + "px";
-}
+  </main>
 
-target.addEventListener("pointerenter", moveTarget);
+  <script>
+    "use strict";
 
-target.addEventListener("click", () => {
-  score++;
-  scoreLabel.textContent = "Stars caught: " + score;
-  moveTarget();
-});
+    // PAGE ELEMENTS
+    const game = document.getElementById("game");
+    const proposal = document.getElementById("proposal");
+    const celebration = document.getElementById("celebration");
+    const target = document.getElementById("target");
+    const arena = document.getElementById("arena");
+    const timeLabel = document.getElementById("time");
+    const scoreLabel = document.getElementById("score");
+    const yes = document.getElementById("yes");
+    const no = document.getElementById("no");
+    const buttons = document.getElementById("buttons");
+    const hint = document.getElementById("hint");
+    const music = document.getElementById("loveMusic");
+    const musicButton = document.getElementById("musicButton");
+    const closeButton = document.getElementById("closeButton");
 
-const clock = setInterval(() => {
-  seconds--;
-  timeLabel.textContent = seconds;
+    // GAME STATE
+    let seconds = 10;
+    let score = 0;
+    let noClicks = 0;
+    let finished = false;
+    let clock = null;
+    let heartTimers = [];
 
-  if (seconds <= 0 && !finished) {
-    clearInterval(clock);
-    finished = true;
-    game.style.display = "none";
-    proposal.style.display = "block";
-  }
-}, 1000);
+    // MOVE THE STAR
+    function moveTarget() {
+      const maxX = Math.max(
+        0, arena.clientWidth - target.offsetWidth
+      );
 
-/* THE GROWING YES BUTTON */
-no.addEventListener("click", () => {
-  noClicks++;
-  yesScale *= 1.8;
+      const maxY = Math.max(
+        0, arena.clientHeight - target.offsetHeight
+      );
 
-  yes.textContent = "YES 💜";
-  yes.style.position = "fixed";
-  yes.style.left = "50%";
-  yes.style.top = "50%";
-  yes.style.width = "100vw";
-  yes.style.height = "100vh";
-  yes.style.maxWidth = "none";
-  yes.style.margin = "0";
-  yes.style.padding = "0";
-  yes.style.borderRadius = "0";
-  yes.style.fontSize = Math.min(24 + noClicks * 8, 100) + "px";
-  yes.style.zIndex = "99999";
-  yes.style.transform =
-    `translate(-50%, -50%) scale(${yesScale})`;
-
-  if (noClicks >= 4) {
-    [...proposal.children].forEach(element => {
-      element.style.visibility = "hidden";
-    });
-
-    yes.style.visibility = "visible";
-    yes.textContent = "YES 💜";
-  }
-
-  hint.textContent = "";
-});
-
-/* YES CELEBRATION */
-yes.addEventListener("click", async () => {
-  proposal.style.display = "none";
-  celebration.style.display = "block";
-
-  // Start music on the YES click.
-  music.volume = 0.65;
-  music.play().catch(() => {
-    document.getElementById("musicButton").textContent =
-      "Tap here to start music 🎵";
-  });
-
-  // Floating hearts.
-  for (let i = 0; i < 35; i++) {
-    setTimeout(() => {
-      const heart = document.createElement("span");
-      heart.className = "heart";
-      heart.textContent = ["💜", "💗", "💕", "❤️"][i % 4];
-      heart.style.left = Math.random() * 100 + "vw";
-
-      document.body.appendChild(heart);
-      setTimeout(() => heart.remove(), 4200);
-    }, i * 130);
-  }
-
-  await notifyMe();
-});
-
-document.getElementById("musicButton").addEventListener("click", () => {
-  music.play().catch(() => {
-    alert("Please check that love-music.mp3 is uploaded correctly.");
-  });
-});
-
-document.getElementById("closeButton").addEventListener("click", () => {
-  music.pause();
-  celebration.style.display = "none";
-  game.style.display = "block";
-  seconds = 10;
-  score = 0;
-  finished = false;
-  timeLabel.textContent = seconds;
-  scoreLabel.textContent = "Stars caught: 0";
-  target.style.left = "35%";
-  target.style.top = "40%";
-  noClicks = 0;
-  yesScale = 1;
-  yes.removeAttribute("style");
-  yes.textContent = "YES 💜";
-  [...proposal.children].forEach(element => {
-    element.style.visibility = "visible";
-  });
-});
-
-/* PHONE NOTIFICATION
-   Replace the topic below with your own private,
-   unpredictable ntfy topic. */
-async function notifyMe() {
-  const topic = "REPLACE_WITH_YOUR_RANDOM_TOPIC";
-
-  if (topic === "REPLACE_WITH_YOUR_RANDOM_TOPIC") {
-    console.log("Set up your notification topic first.");
-    return;
-  }
-
-  try {
-    const response = await fetch("https://ntfy.sh/" + topic, {
-      method: "POST",
-      headers: {
-        "Title": "A little good news 💜",
-        "Priority": "high",
-        "Tags": "heart"
-      },
-      body: "She clicked YES! 💜"
-    });
-
-    if (!response.ok) {
-      console.error("Notification could not be sent.");
+      target.style.left = Math.random() * maxX + "px";
+      target.style.top = Math.random() * maxY + "px";
     }
-  } catch (error) {
-    console.error("Notification failed:", error);
-  }
-}
-</script>
+
+    target.addEventListener("pointerenter", (event) => {
+      if (event.pointerType === "mouse" && !finished) {
+        moveTarget();
+      }
+    });
+
+    target.addEventListener("click", () => {
+      if (finished) return;
+
+      score++;
+      scoreLabel.textContent = "Stars caught: " + score;
+      moveTarget();
+    });
+
+    // START OR RESTART THE TIMER
+    function startGame() {
+      clearInterval(clock);
+
+      seconds = 10;
+      score = 0;
+      noClicks = 0;
+      finished = false;
+
+      timeLabel.textContent = seconds;
+      scoreLabel.textContent = "Stars caught: 0";
+
+      game.style.display = "block";
+      proposal.style.display = "none";
+      celebration.style.display = "none";
+
+      yes.classList.remove("fullscreen");
+      yes.removeAttribute("style");
+      yes.textContent = "YES 💜";
+
+      no.style.visibility = "visible";
+      hint.textContent = "";
+
+      [...proposal.children].forEach(element => {
+        element.style.visibility = "visible";
+      });
+
+      target.style.left = "35%";
+      target.style.top = "40%";
+
+      clock = setInterval(() => {
+        seconds--;
+        timeLabel.textContent = seconds;
+
+        if (seconds <= 0) {
+          clearInterval(clock);
+          clock = null;
+          finished = true;
+          game.style.display = "none";
+          proposal.style.display = "block";
+        }
+      }, 1000);
+    }
+
+    // THE NO BUTTON MAKES YES GROW
+    no.addEventListener("click", () => {
+      noClicks++;
+
+      hint.textContent = "";
+
+      if (noClicks < 4) {
+        yes.style.transform =
+          "scale(" + (1 + noClicks * 0.3) + ")";
+
+        yes.textContent = [
+          "YES 💜",
+          "YES PLEASE 💜",
+          "COME ON, YES! 💕"
+        ][noClicks - 1];
+
+        return;
+      }
+
+      // After four NO clicks, YES fills the screen.
+      [...proposal.children].forEach(element => {
+        if (element !== buttons) {
+          element.style.visibility = "hidden";
+        }
+      });
+
+      no.style.visibility = "hidden";
+      yes.classList.add("fullscreen");
+      yes.style.visibility = "visible";
+      yes.textContent = "JUST SAY YES! 💜";
+    });
+
+    // FLOATING HEARTS
+    function createHearts() {
+      const emojis = ["💜", "💗", "💕", "❤️", "💖"];
+
+      for (let i = 0; i < 35; i++) {
+        const timer = setTimeout(() => {
+          const heart = document.createElement("span");
+
+          heart.className = "heart";
+          heart.textContent = emojis[i % emojis.length];
+          heart.style.left = Math.random() * 95 + "vw";
+
+          document.body.appendChild(heart);
+
+          setTimeout(() => heart.remove(), 4200);
+        }, i * 130);
+
+        heartTimers.push(timer);
+      }
+    }
+
+    function clearHearts() {
+      heartTimers.forEach(timer => clearTimeout(timer));
+      heartTimers = [];
+
+      document.querySelectorAll(".heart").forEach(heart => {
+        heart.remove();
+      });
+    }
+
+    // YES: SHOW THE CELEBRATION
+    yes.addEventListener("click", () => {
+      clearInterval(clock);
+      clock = null;
+
+      proposal.style.display = "none";
+      celebration.style.display = "block";
+
+      music.volume = 0.65;
+
+      // The click allows the browser to attempt audio playback.
+      music.play().then(() => {
+        musicButton.textContent = "Music is playing 🎵";
+      }).catch(() => {
+        musicButton.textContent = "Tap here to start music 🎵";
+      });
+
+      createHearts();
+
+      // Send the phone notification without blocking the celebration.
+      notifyMe();
+    });
+
+    // MUSIC CONTROL
+    musicButton.addEventListener("click", () => {
+      if (!music.paused) {
+        music.pause();
+        musicButton.textContent = "Play music 🎵";
+        return;
+      }
+
+      music.play().then(() => {
+        musicButton.textContent = "Pause music ⏸️";
+      }).catch(() => {
+        alert(
+          "Music could not play. Check that love-music.mp3 " +
+          "is uploaded beside index.html."
+        );
+      });
+    });
+
+    music.addEventListener("play", () => {
+      musicButton.textContent = "Pause music ⏸️";
+    });
+
+    music.addEventListener("pause", () => {
+      musicButton.textContent = "Play music 🎵";
+    });
+
+    // PLAY AGAIN
+    closeButton.addEventListener("click", () => {
+      music.pause();
+      music.currentTime = 0;
+
+      clearHearts();
+      startGame();
+    });
+
+    // PHONE NOTIFICATION USING NTFY
+    async function notifyMe() {
+      // Replace this with your own unpredictable ntfy topic.
+      const topic = "REPLACE_WITH_YOUR_RANDOM_TOPIC";
+
+      if (
+        !topic ||
+        topic === "REPLACE_WITH_YOUR_RANDOM_TOPIC"
+      ) {
+        console.log(
+          "Set your private ntfy topic to enable notifications."
+        );
+        return;
+      }
+
+      try {
+        const response = await fetch(
+          "https://ntfy.sh/" + encodeURIComponent(topic),
+          {
+            method: "POST",
+            headers: {
+              "Title": "A little good news 💜",
+              "Priority": "high",
+              "Tags": "heart"
+            },
+            body: "She clicked YES! 💜"
+          }
+        );
+
+        if (!response.ok) {
+          console.error(
+            "Notification failed with status:",
+            response.status
+          );
+        }
+      } catch (error) {
+        console.error("Notification failed:", error);
+      }
+    }
+
+    // BEGIN
+    startGame();
+  </script>
 </body>
 </html>
